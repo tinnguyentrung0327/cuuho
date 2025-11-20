@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  RESCUER
+  CITIZEN
+}
+
+enum RequestStatus {
+  PENDING
+  ASSIGNED
+  ON_THE_WAY
+  RESOLVED
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  fullName  String
+  phone     String?
+  role      UserRole @default(CITIZEN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  rescueRequests RescueRequest[] @relation("Requester")
+  assignedRequests RescueRequest[] @relation("Rescuer")
+  team           RescueTeam?     @relation(fields: [teamId], references: [id])
+  teamId         String?
+  locationLogs   LocationLog[]
+}
+
+model RescueTeam {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  status      String   @default("ACTIVE") // ACTIVE, BUSY, OFFLINE
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members     User[]
+  requests    RescueRequest[]
+}
+
+model RescueRequest {
+  id          String        @id @default(uuid())
+  trackingId  String        @unique // Short code for tracking
+  description String
+  status      RequestStatus @default(PENDING)
+  latitude    Float
+  longitude   Float
+  address     String?
+  priority    String        @default("MEDIUM") // LOW, MEDIUM, HIGH, CRITICAL
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  requester   User          @relation("Requester", fields: [requesterId], references: [id])
+  requesterId String
+  rescuer     User?         @relation("Rescuer", fields: [rescuerId], references: [id])
+  rescuerId   String?
+  team        RescueTeam?   @relation(fields: [teamId], references: [id])
+  teamId      String?
+  
+  attachments FileAttachment[]
+}
+
+model EmergencyAlert {
+  id          String   @id @default(uuid())
+  title       String
+  message     String
+  level       String   // INFO, WARNING, CRITICAL
+  latitude    Float?
+  longitude   Float?
+  radius      Float?   // Affected radius in meters
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model LocationLog {
+  id        String   @id @default(uuid())
+  latitude  Float
+  longitude Float
+  timestamp DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model FileAttachment {
+  id        String   @id @default(uuid())
+  url       String
+  type      String   // IMAGE, VIDEO
+  createdAt DateTime @default(now())
+
+  request   RescueRequest @relation(fields: [requestId], references: [id])
+  requestId String
+}
