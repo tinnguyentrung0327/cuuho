@@ -24,7 +24,6 @@ export default function Home() {
             <h1 className="text-white font-bold text-xl md:text-2xl tracking-tight leading-none">
               Cứu Trợ <span className="text-red-500">Khẩn Cấp</span>
             </h1>
-            <p className="text-gray-300 text-xs font-medium">Hỗ trợ 24/7 trên toàn quốc</p>
           </div>
         </div>
 
