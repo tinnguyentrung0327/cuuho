@@ -125,7 +125,7 @@ export default function Dashboard() {
                 <div className="p-4 flex justify-between items-center border-b border-gray-100">
                     <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                         <AlertCircle className="text-red-600" />
-                        Dashboard Cứu Hộ
+                        Dashboard Cứu Trợ
                     </h1>
                     <Link href="/">
                         <Button size="sm" className="bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300">
@@ -281,7 +281,7 @@ export default function Dashboard() {
                             <div className="hidden md:block mb-6">
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <h2 className="text-2xl font-bold mb-2">Chi tiết yêu cầu cứu hộ</h2>
+                                        <h2 className="text-2xl font-bold mb-2">Chi tiết yêu cầu cứu trợ</h2>
                                         <div className="flex items-center gap-2 text-gray-600">
                                             <span className="font-medium">Mã theo dõi:</span>
                                             <a

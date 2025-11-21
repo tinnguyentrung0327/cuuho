@@ -148,7 +148,7 @@ export default function RequestForm() {
             <CardHeader className="bg-red-600 text-white p-6">
                 <div className="flex items-center justify-center space-x-2">
                     <AlertTriangle className="w-6 h-6 animate-pulse" />
-                    <CardTitle className="text-2xl font-bold text-center">Yêu Cầu Cứu Hộ</CardTitle>
+                    <CardTitle className="text-2xl font-bold text-center">Yêu Cầu Cứu Trợ</CardTitle>
                 </div>
                 <CardDescription className="text-red-100 text-center font-medium">
                     Hệ thống sẽ tự động định vị GPS của bạn

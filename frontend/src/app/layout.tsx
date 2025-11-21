@@ -9,7 +9,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Emergency Rescue Platform",
-  description: "Nền tảng cứu hộ khẩn cấp với bản đồ realtime",
+  description: "Nền tảng cứu trợ khẩn cấp với bản đồ realtime",
 };
 
 export default function RootLayout({
