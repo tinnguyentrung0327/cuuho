@@ -23,6 +23,12 @@ async function main() {
         const userCount = await prisma.user.count();
         console.log(`Total Users: ${userCount}`);
 
+        const specificUser = await prisma.user.findUnique({
+            where: { id: 'faea3e45-2b4a-43f2-bbe1-10673ba62d54' }
+        });
+        console.log('Specific User (faea...):', specificUser ? 'FOUND ✅' : 'NOT FOUND ❌');
+
+
     } catch (error) {
         console.error('Error connecting to database:', error);
     } finally {
