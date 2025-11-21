@@ -120,64 +120,66 @@ export default function Dashboard() {
     return (
         <div className="flex flex-col md:flex-row h-screen bg-gray-50 overflow-hidden">
             {/* LEFT PANEL (Mobile: Top 60vh, Desktop: Left 1/3) */}
-            <div className="flex flex-col w-full md:w-1/3 h-[60vh] md:h-full bg-white border-r border-gray-200 z-10 shadow-sm md:shadow-none">
+            <div className="flex flex-col w-full md:w-1/3 h-[60vh] md:h-full bg-gradient-to-br from-white to-gray-50 border-r border-gray-200 z-10 shadow-lg md:shadow-none">
                 {/* Header */}
-                <div className="p-4 flex justify-between items-center border-b border-gray-100">
+                <div className="p-4 flex justify-between items-center border-b border-gray-200 bg-gradient-to-r from-red-50 to-orange-50">
                     <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                        <AlertCircle className="text-red-600" />
-                        Dashboard Cứu Trợ
+                        <div className="p-2 bg-red-600 rounded-lg shadow-md">
+                            <AlertCircle className="text-white w-5 h-5" />
+                        </div>
+                        <span className="bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">Dashboard Cứu Trợ</span>
                     </h1>
                     <Link href="/">
-                        <Button size="sm" className="bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300">
+                        <Button size="sm" className="bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 shadow-sm">
                             <Home className="w-4 h-4 mr-1" /> Trang Chủ
                         </Button>
                     </Link>
                 </div>
 
                 {/* Stats Bar */}
-                <div className="grid grid-cols-3 gap-0 border-b border-gray-100 divide-x divide-gray-100 bg-gray-50">
-                    <div className="p-3 text-center">
-                        <div className="text-xl font-bold text-blue-600">{requests.length}</div>
-                        <div className="text-xs text-gray-500 font-medium uppercase">Tổng</div>
+                <div className="grid grid-cols-3 gap-0 border-b border-gray-200 divide-x divide-gray-200 bg-white shadow-sm">
+                    <div className="p-3 text-center hover:bg-blue-50 transition-colors">
+                        <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{requests.length}</div>
+                        <div className="text-xs text-gray-600 font-semibold uppercase tracking-wide">Tổng</div>
                     </div>
-                    <div className="p-3 text-center">
-                        <div className="text-xl font-bold text-yellow-600">
+                    <div className="p-3 text-center hover:bg-yellow-50 transition-colors">
+                        <div className="text-2xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
                             {requests.filter(r => r.status === 'PENDING').length}
                         </div>
-                        <div className="text-xs text-gray-500 font-medium uppercase">Chờ xử lý</div>
+                        <div className="text-xs text-gray-600 font-semibold uppercase tracking-wide">Chờ xử lý</div>
                     </div>
-                    <div className="p-3 text-center">
-                        <div className="text-xl font-bold text-green-600">
+                    <div className="p-3 text-center hover:bg-green-50 transition-colors">
+                        <div className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                             {requests.filter(r => r.status === 'RESOLVED').length}
                         </div>
-                        <div className="text-xs text-gray-500 font-medium uppercase">Hoàn thành</div>
+                        <div className="text-xs text-gray-600 font-semibold uppercase tracking-wide">Hoàn thành</div>
                     </div>
                 </div>
 
                 {/* Filters */}
-                <div className="p-2 bg-white border-b border-gray-100 flex gap-2 overflow-x-auto">
+                <div className="p-3 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200 flex gap-2 overflow-x-auto shadow-sm">
                     <div className="relative flex-1 min-w-[150px]">
-                        <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+                        <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                         <input
                             type="text"
                             placeholder="Tìm địa chỉ..."
-                            className="w-full pl-8 pr-3 py-2 border rounded-md text-sm bg-gray-50 focus:bg-white transition-colors"
+                            className="w-full pl-9 pr-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm bg-white focus:bg-white focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-all"
                             value={filterAddress}
                             onChange={(e) => setFilterAddress(e.target.value)}
                         />
                     </div>
                     <div className="relative flex-1 min-w-[120px]">
-                        <Phone className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+                        <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                         <input
                             type="text"
                             placeholder="Tìm SĐT..."
-                            className="w-full pl-8 pr-3 py-2 border rounded-md text-sm bg-gray-50 focus:bg-white transition-colors"
+                            className="w-full pl-9 pr-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm bg-white focus:bg-white focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-all"
                             value={filterPhone}
                             onChange={(e) => setFilterPhone(e.target.value)}
                         />
                     </div>
-                    <Button onClick={fetchRequests} size="icon" variant="outline" className="shrink-0">
-                        <RefreshCw className="h-4 w-4" />
+                    <Button onClick={fetchRequests} size="icon" variant="outline" className="shrink-0 bg-white hover:bg-red-50 border-2 border-gray-200 hover:border-red-300">
+                        <RefreshCw className="h-4 w-4 text-gray-600" />
                     </Button>
                 </div>
 
@@ -265,7 +267,7 @@ export default function Dashboard() {
                                 requests={[selectedRequest]}
                                 center={{ latitude: selectedRequest.latitude, longitude: selectedRequest.longitude }}
                                 zoom={15}
-                                interactive={false}
+                                interactive={true}
                             />
                             <Button
                                 className="hidden md:flex absolute top-4 left-4 bg-white text-black hover:bg-gray-100 shadow-md z-10"
