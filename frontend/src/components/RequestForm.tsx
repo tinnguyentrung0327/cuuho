@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { User, Phone, MapPin, FileVideo, Loader2, Send, AlertTriangle } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export default function RequestForm() {
     const [loading, setLoading] = useState(false);
@@ -127,7 +127,7 @@ export default function RequestForm() {
 
     if (isSubmitted) {
         return (
-            <Card className="w-full border-none shadow-xl bg-white/95 backdrop-blur-md p-8 text-center">
+            <Card className="w-full border-none shadow-xl bg-white p-8 text-center">
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -144,32 +144,32 @@ export default function RequestForm() {
     }
 
     return (
-        <Card className="w-full border-none shadow-2xl bg-white/90 backdrop-blur-xl overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white p-6">
+        <Card className="w-full border-none shadow-2xl bg-white overflow-hidden">
+            <CardHeader className="bg-red-600 text-white p-6">
                 <div className="flex items-center justify-center space-x-2">
                     <AlertTriangle className="w-6 h-6 animate-pulse" />
                     <CardTitle className="text-2xl font-bold text-center">Yêu Cầu Cứu Hộ</CardTitle>
                 </div>
-                <CardDescription className="text-red-100 text-center">
+                <CardDescription className="text-red-100 text-center font-medium">
                     Hệ thống sẽ tự động định vị GPS của bạn
                 </CardDescription>
             </CardHeader>
             <CardContent className="p-6">
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="space-y-2">
-                        <Label htmlFor="name" className="flex items-center gap-2 text-gray-700">
+                        <Label htmlFor="name" className="flex items-center gap-2 text-gray-900 font-bold">
                             <User className="w-4 h-4" /> Họ và tên
                         </Label>
                         <Input
                             id="name"
                             placeholder="Nguyễn Văn A"
                             required
-                            className="bg-white/50 border-gray-300 focus:ring-red-500 focus:border-red-500 transition-all"
+                            className="bg-white border-gray-400 text-gray-900 focus:ring-red-500 focus:border-red-500 transition-all font-medium"
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="phone" className="flex items-center gap-2 text-gray-700">
+                        <Label htmlFor="phone" className="flex items-center gap-2 text-gray-900 font-bold">
                             <Phone className="w-4 h-4" /> Số điện thoại
                         </Label>
                         <Input
@@ -177,41 +177,41 @@ export default function RequestForm() {
                             placeholder="0912345678"
                             required
                             type="tel"
-                            className="bg-white/50 border-gray-300 focus:ring-red-500 focus:border-red-500 transition-all"
+                            className="bg-white border-gray-400 text-gray-900 focus:ring-red-500 focus:border-red-500 transition-all font-medium"
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="address" className="flex items-center gap-2 text-gray-700">
+                        <Label htmlFor="address" className="flex items-center gap-2 text-gray-900 font-bold">
                             <MapPin className="w-4 h-4" /> Địa chỉ hiện tại
                         </Label>
                         <Input
                             id="address"
                             placeholder="Nhập địa chỉ hoặc để trống (tự động GPS)"
                             required
-                            className="bg-white/50 border-gray-300 focus:ring-red-500 focus:border-red-500 transition-all"
+                            className="bg-white border-gray-400 text-gray-900 focus:ring-red-500 focus:border-red-500 transition-all font-medium"
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="description" className="text-gray-700">Mô tả sự cố</Label>
+                        <Label htmlFor="description" className="text-gray-900 font-bold">Mô tả sự cố</Label>
                         <Textarea
                             id="description"
                             placeholder="Mô tả chi tiết tình trạng, số người gặp nạn..."
                             required
-                            className="bg-white/50 border-gray-300 focus:ring-red-500 focus:border-red-500 min-h-[100px] transition-all"
+                            className="bg-white border-gray-400 text-gray-900 focus:ring-red-500 focus:border-red-500 min-h-[100px] transition-all font-medium"
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <Label className="flex items-center gap-2 text-gray-700">
+                        <Label className="flex items-center gap-2 text-gray-900 font-bold">
                             <FileVideo className="w-4 h-4" /> Hình ảnh/Video (Tùy chọn)
                         </Label>
                         <div className="flex items-center justify-center w-full">
-                            <label htmlFor="images" className="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                            <label htmlFor="images" className="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-400 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                    <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Chạm để tải lên</span></p>
-                                    <p className="text-xs text-gray-500">IMG, VIDEO (Max 3 file)</p>
+                                    <p className="mb-2 text-sm text-gray-700 font-medium"><span className="font-bold">Chạm để tải lên</span></p>
+                                    <p className="text-xs text-gray-600">IMG, VIDEO (Max 3 file)</p>
                                 </div>
                                 <Input
                                     id="images"
@@ -224,7 +224,7 @@ export default function RequestForm() {
                             </label>
                         </div>
                         {selectedFiles.length > 0 && (
-                            <p className="text-sm text-green-600 font-medium text-center">
+                            <p className="text-sm text-green-700 font-bold text-center">
                                 ✅ Đã chọn {selectedFiles.length} file
                             </p>
                         )}
@@ -232,7 +232,7 @@ export default function RequestForm() {
 
                     <Button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-6 text-lg shadow-lg transform transition-all active:scale-95"
+                        className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-6 text-lg shadow-lg transform transition-all active:scale-95"
                         disabled={loading}
                     >
                         {loading ? (
