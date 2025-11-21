@@ -163,6 +163,7 @@ export default function TrackingPage() {
                                                 <div key={attachment.id} className="relative h-32 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 group">
                                                     {attachment.type === 'IMAGE' ? (
                                                         <a href={attachment.url} target="_blank" rel="noopener noreferrer">
+                                                            {/* eslint-disable-next-line @next/next/no-img-element */}
                                                             <img
                                                                 src={attachment.url}
                                                                 alt="Attachment"
@@ -224,7 +225,7 @@ export default function TrackingPage() {
                                     ) : (
                                         <div className="text-center text-green-700 font-medium">
                                             Cảm ơn bạn đã đánh giá!
-                                            {request.feedback && <p className="text-sm text-gray-600 mt-2 italic">"{request.feedback}"</p>}
+                                            {request.feedback && <p className="text-sm text-gray-600 mt-2 italic">&quot;{request.feedback}&quot;</p>}
                                         </div>
                                     )}
                                 </CardContent>
