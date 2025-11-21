@@ -1,6 +1,6 @@
 # --- Stage 1: Builder ---
-# Explicitly specify platform to avoid ARM/AMD64 compatibility issues
-FROM --platform=linux/amd64 node:18-alpine AS builder
+# Use Debian-based image instead of Alpine to avoid Prisma OpenSSL issues
+FROM --platform=linux/amd64 node:18-slim AS builder
 
 WORKDIR /app
 
@@ -22,7 +22,10 @@ RUN npx prisma generate
 RUN npm run build
 
 # --- Stage 2: Production ---
-FROM --platform=linux/amd64 node:18-alpine AS runner
+FROM --platform=linux/amd64 node:18-slim AS runner
+
+# Install OpenSSL (required by Prisma)
+RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
