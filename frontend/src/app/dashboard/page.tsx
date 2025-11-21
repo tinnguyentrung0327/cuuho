@@ -250,132 +250,124 @@ export default function Dashboard() {
             {/* RIGHT PANEL (Mobile: Bottom Fixed 40vh, Desktop: Right 2/3 Full Height) */}
             <div className="w-full md:w-2/3 h-[40vh] md:h-full relative bg-white border-t md:border-t-0 md:border-l border-gray-200 flex-none md:flex-auto">
                 {selectedRequest ? (
-                    <div className="absolute inset-0 flex flex-col md:flex-col h-full">
-                        {/* Header for Mobile Detail */}
-                        <div className="bg-white/90 backdrop-blur z-20 px-4 py-2 border-b border-gray-200 flex justify-between items-center flex-none">
-                            <h3 className="font-bold text-sm md:text-base">Chi tiết yêu cầu</h3>
+                    <div className="absolute inset-0 flex flex-row md:flex-col h-full">
+                        {/* Header for Mobile Detail (Hidden on Desktop usually, or kept) */}
+                        <div className="absolute top-0 left-0 right-0 bg-white/90 backdrop-blur z-10 px-4 py-2 border-b border-gray-200 flex justify-between items-center md:hidden">
+                            <h3 className="font-bold text-sm">Chi tiết yêu cầu</h3>
                             <Button size="sm" variant="ghost" onClick={() => setSelectedRequest(null)} className="h-8 text-xs">
                                 Đóng
                             </Button>
                         </div>
 
-                        {/* Mobile Layout: Map + Quick Actions Stacked */}
-                        <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
-                            {/* Map Section */}
-                            <div className="relative h-2/3 md:h-1/2 md:w-full border-b md:border-b md:border-r-0 border-gray-200">
-                                <MapComponent
-                                    requests={[selectedRequest]}
-                                    center={{ latitude: selectedRequest.latitude, longitude: selectedRequest.longitude }}
-                                    zoom={15}
-                                    interactive={false}
-                                />
-                                <Button
-                                    className="hidden md:flex absolute top-4 left-4 bg-white text-black hover:bg-gray-100 shadow-md z-10"
-                                    onClick={() => setSelectedRequest(null)}
-                                >
-                                    ← Quay lại bản đồ tổng
-                                </Button>
-                            </div>
+                        {/* Map Half */}
+                        <div className="w-1/2 md:w-full h-full md:h-1/2 relative border-r md:border-r-0 md:border-b border-gray-200 pt-10 md:pt-0">
+                            <MapComponent
+                                requests={[selectedRequest]}
+                                center={{ latitude: selectedRequest.latitude, longitude: selectedRequest.longitude }}
+                                zoom={15}
+                                interactive={false}
+                            />
+                            <Button
+                                className="hidden md:flex absolute top-4 left-4 bg-white text-black hover:bg-gray-100 shadow-md z-10"
+                                onClick={() => setSelectedRequest(null)}
+                            >
+                                ← Quay lại bản đồ tổng
+                            </Button>
+                        </div>
 
-                            {/* Quick Actions + Info (Mobile: Bottom 1/3, Desktop: Bottom Half) */}
-                            <div className="h-1/3 md:h-1/2 md:w-full p-3 md:p-6 overflow-y-auto bg-white">
-                                {/* Desktop Title (Hidden on Mobile) */}
-                                <div className="hidden md:block mb-6">
-                                    <div className="flex justify-between items-start">
-                                        <div>
-                                            <h2 className="text-2xl font-bold mb-2">Chi tiết yêu cầu cứu trợ</h2>
-                                            <div className="flex items-center gap-2 text-gray-600">
-                                                <span className="font-medium">Mã theo dõi:</span>
-                                                <a
-                                                    href={`/tracking/${selectedRequest.id}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded hover:bg-blue-100 hover:underline transition-colors"
-                                                    title="Xem trang theo dõi"
-                                                >
-                                                    {selectedRequest.id.substring(0, 8).toUpperCase()} ↗
-                                                </a>
-                                            </div>
+                        {/* Info Half */}
+                        <div className="w-1/2 md:w-full h-full md:h-1/2 p-3 md:p-6 overflow-y-auto bg-white pt-10 md:pt-6">
+                            {/* Desktop Title (Hidden on Mobile) */}
+                            <div className="hidden md:block mb-6">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h2 className="text-2xl font-bold mb-2">Chi tiết yêu cầu cứu trợ</h2>
+                                        <div className="flex items-center gap-2 text-gray-600">
+                                            <span className="font-medium">Mã theo dõi:</span>
+                                            <a
+                                                href={`/tracking/${selectedRequest.id}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded hover:bg-blue-100 hover:underline transition-colors"
+                                                title="Xem trang theo dõi"
+                                            >
+                                                {selectedRequest.id.substring(0, 8).toUpperCase()} ↗
+                                            </a>
                                         </div>
-                                        <div className={`px-4 py-2 rounded-full text-sm font-bold ${selectedRequest.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
-                                                selectedRequest.status === 'ASSIGNED' ? 'bg-blue-100 text-blue-800' :
-                                                    selectedRequest.status === 'ON_THE_WAY' ? 'bg-purple-100 text-purple-800' :
-                                                        'bg-green-100 text-green-800'
-                                            }`}>
-                                            {selectedRequest.status}
-                                        </div>
+                                    </div>
+                                    <div className={`px-4 py-2 rounded-full text-sm font-bold ${selectedRequest.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
+                                        selectedRequest.status === 'ASSIGNED' ? 'bg-blue-100 text-blue-800' :
+                                            selectedRequest.status === 'ON_THE_WAY' ? 'bg-purple-100 text-purple-800' :
+                                                'bg-green-100 text-green-800'
+                                        }`}>
+                                        {selectedRequest.status}
                                     </div>
                                 </div>
+                            </div>
 
-                                {/* Mobile: Compact Info + Actions */}
-                                <div className="space-y-2">
-                                    {/* Action Buttons */}
-                                    <div className="grid grid-cols-3 md:flex md:flex-wrap gap-2 md:mb-4 md:p-4 md:bg-gray-50 md:rounded-lg md:border md:border-gray-200">
-                                        <Button
-                                            size="sm"
-                                            className="w-full bg-blue-600 hover:bg-blue-700 text-xs px-2"
-                                            onClick={() => handleStatusUpdate(selectedRequest.id, 'ASSIGNED')}
-                                        >
-                                            Tiếp nhận
-                                        </Button>
-                                        <Button
-                                            size="sm"
-                                            className="w-full bg-purple-600 hover:bg-purple-700 text-xs px-2"
-                                            onClick={() => handleStatusUpdate(selectedRequest.id, 'ON_THE_WAY')}
-                                        >
-                                            Đang đến
-                                        </Button>
-                                        <Button
-                                            size="sm"
-                                            className="w-full bg-green-600 hover:bg-green-700 text-xs px-2"
-                                            onClick={() => handleStatusUpdate(selectedRequest.id, 'RESOLVED')}
-                                        >
-                                            Hoàn thành
-                                        </Button>
+                            {/* Action Buttons */}
+                            <div className="space-y-2 md:space-y-0 md:mb-6 md:p-4 md:bg-gray-50 md:rounded-lg md:border md:border-gray-200">
+                                <h3 className="hidden md:block text-sm font-bold mb-3 text-gray-700">Cập nhật trạng thái</h3>
+                                <div className="grid grid-cols-1 md:flex md:flex-wrap gap-2">
+                                    <Button
+                                        size="sm"
+                                        className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-xs md:text-sm"
+                                        onClick={() => handleStatusUpdate(selectedRequest.id, 'ASSIGNED')}
+                                    >
+                                        Tiếp nhận
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        className="w-full md:w-auto bg-purple-600 hover:bg-purple-700 text-xs md:text-sm"
+                                        onClick={() => handleStatusUpdate(selectedRequest.id, 'ON_THE_WAY')}
+                                    >
+                                        Đang đến
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-xs md:text-sm"
+                                        onClick={() => handleStatusUpdate(selectedRequest.id, 'RESOLVED')}
+                                    >
+                                        Hoàn thành
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Info Details */}
+                            <div className="mt-2 md:mt-0 space-y-2 md:grid md:grid-cols-2 md:gap-8 md:space-y-0">
+                                <div className="space-y-1 md:space-y-4">
+                                    <div>
+                                        <h3 className="text-xs md:text-sm font-semibold text-gray-500 uppercase">Người yêu cầu</h3>
+                                        <p className="text-sm md:text-lg font-medium">{selectedRequest.requester?.name || 'Không có tên'}</p>
+                                        <p className="text-xs md:text-base text-blue-600 font-bold">
+                                            <a href={`tel:${selectedRequest.requester?.phone}`}>{selectedRequest.requester?.phone}</a>
+                                        </p>
                                     </div>
-
-                                    {/* Contact Info (Compact on Mobile) */}
-                                    <div className="text-xs md:text-base">
-                                        <span className="font-semibold text-gray-600">Người yêu cầu:</span>{' '}
-                                        <span className="font-bold">{selectedRequest.requester?.name || 'Không có tên'}</span>
-                                        {' | '}
-                                        <a href={`tel:${selectedRequest.requester?.phone}`} className="text-blue-600 font-bold">
-                                            {selectedRequest.requester?.phone}
-                                        </a>
+                                    <div className="hidden md:block">
+                                        <h3 className="text-sm font-semibold text-gray-500 uppercase">Vị trí</h3>
+                                        <p className="text-gray-800">{selectedRequest.address || 'Chưa có địa chỉ cụ thể'}</p>
                                     </div>
-
-                                    {/* Desktop Extended Info */}
-                                    <div className="hidden md:block mt-4 space-y-4">
-                                        <div className="grid grid-cols-2 gap-8">
-                                            <div className="space-y-4">
-                                                <div>
-                                                    <h3 className="text-sm font-semibold text-gray-500 uppercase">Vị trí</h3>
-                                                    <p className="text-gray-800">{selectedRequest.address || 'Chưa có địa chỉ cụ thể'}</p>
-                                                </div>
-                                            </div>
-                                            <div className="space-y-4">
-                                                <div>
-                                                    <h3 className="text-sm font-semibold text-gray-500 uppercase">Mô tả</h3>
-                                                    <p className="text-base text-gray-800 bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                                        {selectedRequest.description}
-                                                    </p>
-                                                </div>
-                                                {selectedRequest.attachments && selectedRequest.attachments.length > 0 && (
-                                                    <div>
-                                                        <h3 className="text-sm font-semibold text-gray-500 uppercase mb-2">Hình ảnh</h3>
-                                                        <div className="grid grid-cols-2 gap-2">
-                                                            {selectedRequest.attachments.map((attachment) => (
-                                                                <div key={attachment.id} className="relative h-24 rounded overflow-hidden bg-gray-100 border">
-                                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                                    <img src={attachment.url} alt="Att" className="w-full h-full object-cover" />
-                                                                </div>
-                                                            ))}
-                                                        </div>
+                                </div>
+                                <div className="space-y-1 md:space-y-4">
+                                    <div>
+                                        <h3 className="text-xs md:text-sm font-semibold text-gray-500 uppercase">Mô tả</h3>
+                                        <p className="text-sm md:text-base text-gray-800 md:bg-gray-50 md:p-4 md:rounded-lg md:border md:border-gray-100">
+                                            {selectedRequest.description}
+                                        </p>
+                                    </div>
+                                    {selectedRequest.attachments && selectedRequest.attachments.length > 0 && (
+                                        <div className="hidden md:block">
+                                            <h3 className="text-sm font-semibold text-gray-500 uppercase mb-2">Hình ảnh</h3>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {selectedRequest.attachments.map((attachment) => (
+                                                    <div key={attachment.id} className="relative h-24 rounded overflow-hidden bg-gray-100 border">
+                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                        <img src={attachment.url} alt="Att" className="w-full h-full object-cover" />
                                                     </div>
-                                                )}
+                                                ))}
                                             </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
