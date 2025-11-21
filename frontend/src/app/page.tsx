@@ -51,6 +51,11 @@ export default function Home() {
 
       {/* Mobile Bottom Gradient for smooth fade */}
       <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/20 to-transparent pointer-events-none md:hidden z-10" />
+
+      {/* Footer */}
+      <div className="absolute bottom-2 left-0 right-0 z-30 text-center text-xs text-white/80 pointer-events-none">
+        Powered by <span className="font-bold text-white">TechData.AI</span>
+      </div>
     </main>
   );
 }
