@@ -119,8 +119,8 @@ export default function Dashboard() {
 
     return (
         <div className="flex flex-col md:flex-row h-screen bg-gray-50 overflow-hidden">
-            {/* LEFT PANEL (Mobile: Top part, Desktop: Left 1/3) */}
-            <div className="flex flex-col w-full md:w-1/3 flex-1 md:h-full md:flex-none bg-white border-r border-gray-200 z-10 shadow-sm md:shadow-none">
+            {/* LEFT PANEL (Mobile: Top 60vh, Desktop: Left 1/3) */}
+            <div className="flex flex-col w-full md:w-1/3 h-[60vh] md:h-full bg-white border-r border-gray-200 z-10 shadow-sm md:shadow-none">
                 {/* Header */}
                 <div className="p-4 flex justify-between items-center border-b border-gray-100">
                     <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
