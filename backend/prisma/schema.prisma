@@ -62,6 +62,10 @@ model RescueRequest {
   priority    String        @default("MEDIUM") // LOW, MEDIUM, HIGH, CRITICAL
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  rating      Int?          // 1-5 stars
+  feedback    String?
+  contactName String?
+  contactPhone String?
 
   // Relations
   requester   User          @relation("Requester", fields: [requesterId], references: [id])
