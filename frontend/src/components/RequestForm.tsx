@@ -245,6 +245,11 @@ export default function RequestForm() {
                     </Button>
                 </form>
             </CardContent>
+
+            {/* Footer */}
+            <div className="p-3 text-center text-xs text-gray-500 border-t border-gray-200 bg-gray-50">
+                Powered by <span className="font-bold text-gray-700">TechData.AI</span>
+            </div>
         </Card>
     );
 }
