@@ -92,7 +92,7 @@ export default function RequestForm() {
                         latitude,
                         longitude,
                         priority: 'HIGH',
-                        requesterId: 'faea3e45-2b4a-43f2-bbe1-10673ba62d54',
+                        // requesterId is now optional and handled by backend for guests
                         trackingId: Math.random().toString(36).substring(7).toUpperCase(),
                         attachments: attachments.length > 0 ? attachments : undefined,
                     }),

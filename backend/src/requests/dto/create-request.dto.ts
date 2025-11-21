@@ -4,7 +4,7 @@ export class CreateRescueRequestDto {
     longitude: number;
     priority: string;
     trackingId: string;
-    requesterId: string;
+    requesterId?: string;
     attachments?: Array<{
         url: string;
         type: string;

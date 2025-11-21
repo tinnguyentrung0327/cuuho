@@ -12,7 +12,45 @@ export class RequestsService {
     ) { }
 
     async create(dto: CreateRescueRequestDto): Promise<RescueRequest> {
-        const { requesterId, attachments, contactName, contactPhone, ...data } = dto;
+        let { requesterId, attachments, contactName, contactPhone, ...data } = dto;
+
+        // Handle Guest/Anonymous Users
+        if (!requesterId) {
+            if (!contactPhone) {
+                throw new Error('Số điện thoại là bắt buộc đối với yêu cầu ẩn danh');
+            }
+
+            // 1. Find existing user by phone
+            const existingUser = await this.prisma.user.findFirst({
+                where: { phone: contactPhone }
+            });
+
+            if (existingUser) {
+                requesterId = existingUser.id;
+            } else {
+                // 2. Create new guest user if not found
+                // Generate a unique email based on phone to satisfy schema constraints
+                const guestEmail = `${contactPhone}@guest.cuuho.local`;
+
+                // Check if email exists (edge case)
+                const emailCheck = await this.prisma.user.findUnique({ where: { email: guestEmail } });
+
+                if (emailCheck) {
+                    requesterId = emailCheck.id;
+                } else {
+                    const newUser = await this.prisma.user.create({
+                        data: {
+                            fullName: contactName || 'Người dân cần hỗ trợ',
+                            phone: contactPhone,
+                            email: guestEmail,
+                            password: 'guest_password_123', // Dummy password
+                            role: 'CITIZEN'
+                        }
+                    });
+                    requesterId = newUser.id;
+                }
+            }
+        }
 
         const request = await this.prisma.rescueRequest.create({
             data: {
