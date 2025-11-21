@@ -124,7 +124,7 @@ export default function Dashboard() {
                 <div className="p-4 flex justify-between items-center">
                     <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                         <AlertCircle className="text-red-600" />
-                        Dashboard Cứu Hộ
+                        Dashboard Cứu Hộ (Mobile v2)
                     </h1>
                     <Link href="/">
                         <Button size="sm" className="bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300">
@@ -192,8 +192,8 @@ export default function Dashboard() {
                         <Card
                             key={req.id}
                             className={`border-l-4 shadow-sm active:scale-[0.99] transition-transform cursor-pointer ${selectedRequest?.id === req.id ? 'bg-blue-50 border-blue-500 ring-1 ring-blue-300' :
-                                    req.status === 'PENDING' ? 'border-l-red-500' :
-                                        req.status === 'RESOLVED' ? 'border-l-green-500' : 'border-l-blue-500'
+                                req.status === 'PENDING' ? 'border-l-red-500' :
+                                    req.status === 'RESOLVED' ? 'border-l-green-500' : 'border-l-blue-500'
                                 }`}
                             onClick={() => setSelectedRequest(req)}
                         >
@@ -201,7 +201,7 @@ export default function Dashboard() {
                                 <div className="flex justify-between items-start mb-2">
                                     <div className="flex items-center gap-2">
                                         <span className={`text-xs font-bold px-2 py-0.5 rounded ${req.priority === 'CRITICAL' ? 'bg-red-600 text-white' :
-                                                req.priority === 'HIGH' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
+                                            req.priority === 'HIGH' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
                                             }`}>
                                             {req.priority}
                                         </span>
@@ -224,9 +224,9 @@ export default function Dashboard() {
 
                                 <div className="flex justify-between items-center pt-2 border-t border-gray-100">
                                     <span className={`px-2 py-0.5 rounded text-xs font-bold ${req.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
-                                            req.status === 'ASSIGNED' ? 'bg-blue-100 text-blue-800' :
-                                                req.status === 'ON_THE_WAY' ? 'bg-purple-100 text-purple-800' :
-                                                    'bg-green-100 text-green-800'
+                                        req.status === 'ASSIGNED' ? 'bg-blue-100 text-blue-800' :
+                                            req.status === 'ON_THE_WAY' ? 'bg-purple-100 text-purple-800' :
+                                                'bg-green-100 text-green-800'
                                         }`}>
                                         {req.status === 'PENDING' ? 'ĐANG CHỜ' :
                                             req.status === 'ASSIGNED' ? 'ĐÃ TIẾP NHẬN' :
