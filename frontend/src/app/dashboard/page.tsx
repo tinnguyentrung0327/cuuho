@@ -120,7 +120,7 @@ export default function Dashboard() {
     return (
         <div className="flex flex-col md:flex-row h-screen bg-gray-50 overflow-hidden">
             {/* LEFT PANEL (Mobile: Top part, Desktop: Left 1/3) */}
-            <div className="flex flex-col w-full md:w-1/3 h-full bg-white border-r border-gray-200 z-10 shadow-sm md:shadow-none">
+            <div className="flex flex-col w-full md:w-1/3 flex-1 md:h-full md:flex-none bg-white border-r border-gray-200 z-10 shadow-sm md:shadow-none">
                 {/* Header */}
                 <div className="p-4 flex justify-between items-center border-b border-gray-100">
                     <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
@@ -192,8 +192,8 @@ export default function Dashboard() {
                             <Card
                                 key={req.id}
                                 className={`border-l-4 shadow-sm active:scale-[0.99] transition-transform cursor-pointer ${selectedRequest?.id === req.id ? 'bg-blue-50 border-blue-500 ring-1 ring-blue-300' :
-                                        req.status === 'PENDING' ? 'border-l-red-500' :
-                                            req.status === 'RESOLVED' ? 'border-l-green-500' : 'border-l-blue-500'
+                                    req.status === 'PENDING' ? 'border-l-red-500' :
+                                        req.status === 'RESOLVED' ? 'border-l-green-500' : 'border-l-blue-500'
                                     }`}
                                 onClick={() => setSelectedRequest(req)}
                             >
@@ -201,7 +201,7 @@ export default function Dashboard() {
                                     <div className="flex justify-between items-start mb-2">
                                         <div className="flex items-center gap-2">
                                             <span className={`text-xs font-bold px-2 py-0.5 rounded ${req.priority === 'CRITICAL' ? 'bg-red-600 text-white' :
-                                                    req.priority === 'HIGH' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
+                                                req.priority === 'HIGH' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
                                                 }`}>
                                                 {req.priority}
                                             </span>
@@ -224,9 +224,9 @@ export default function Dashboard() {
 
                                     <div className="flex justify-between items-center pt-2 border-t border-gray-100">
                                         <span className={`px-2 py-0.5 rounded text-xs font-bold ${req.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
-                                                req.status === 'ASSIGNED' ? 'bg-blue-100 text-blue-800' :
-                                                    req.status === 'ON_THE_WAY' ? 'bg-purple-100 text-purple-800' :
-                                                        'bg-green-100 text-green-800'
+                                            req.status === 'ASSIGNED' ? 'bg-blue-100 text-blue-800' :
+                                                req.status === 'ON_THE_WAY' ? 'bg-purple-100 text-purple-800' :
+                                                    'bg-green-100 text-green-800'
                                             }`}>
                                             {req.status === 'PENDING' ? 'ĐANG CHỜ' :
                                                 req.status === 'ASSIGNED' ? 'ĐÃ TIẾP NHẬN' :
@@ -284,15 +284,21 @@ export default function Dashboard() {
                                         <h2 className="text-2xl font-bold mb-2">Chi tiết yêu cầu cứu hộ</h2>
                                         <div className="flex items-center gap-2 text-gray-600">
                                             <span className="font-medium">Mã theo dõi:</span>
-                                            <span className="font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
-                                                {selectedRequest.id.substring(0, 8).toUpperCase()}
-                                            </span>
+                                            <a
+                                                href={`/tracking/${selectedRequest.id}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded hover:bg-blue-100 hover:underline transition-colors"
+                                                title="Xem trang theo dõi"
+                                            >
+                                                {selectedRequest.id.substring(0, 8).toUpperCase()} ↗
+                                            </a>
                                         </div>
                                     </div>
                                     <div className={`px-4 py-2 rounded-full text-sm font-bold ${selectedRequest.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
-                                            selectedRequest.status === 'ASSIGNED' ? 'bg-blue-100 text-blue-800' :
-                                                selectedRequest.status === 'ON_THE_WAY' ? 'bg-purple-100 text-purple-800' :
-                                                    'bg-green-100 text-green-800'
+                                        selectedRequest.status === 'ASSIGNED' ? 'bg-blue-100 text-blue-800' :
+                                            selectedRequest.status === 'ON_THE_WAY' ? 'bg-purple-100 text-purple-800' :
+                                                'bg-green-100 text-green-800'
                                         }`}>
                                         {selectedRequest.status}
                                     </div>
