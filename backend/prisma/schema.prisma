@@ -106,6 +106,6 @@ model FileAttachment {
   type      String   // IMAGE, VIDEO
   createdAt DateTime @default(now())
 
-  request   RescueRequest @relation(fields: [requestId], references: [id])
+  request   RescueRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
   requestId String
 }
