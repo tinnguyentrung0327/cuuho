@@ -4,10 +4,19 @@ const prisma = new PrismaClient();
 
 async function main() {
     // Create a sample user
+    // Check if user exists with email but wrong ID
+    const existingUser = await prisma.user.findUnique({ where: { email: 'citizen@example.com' } });
+    if (existingUser && existingUser.id !== 'faea3e45-2b4a-43f2-bbe1-10673ba62d54') {
+        console.log('Deleting existing user with wrong ID...');
+        await prisma.user.delete({ where: { email: 'citizen@example.com' } });
+    }
+
+    // Create or update the sample user
     const user = await prisma.user.upsert({
-        where: { email: 'citizen@example.com' },
+        where: { id: 'faea3e45-2b4a-43f2-bbe1-10673ba62d54' },
         update: {},
         create: {
+            id: 'faea3e45-2b4a-43f2-bbe1-10673ba62d54',
             email: 'citizen@example.com',
             password: 'password123',
             fullName: 'Nguyen Van A',
