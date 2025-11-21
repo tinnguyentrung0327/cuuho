@@ -4,11 +4,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { User, Phone, MapPin, FileVideo, Loader2, Send, AlertTriangle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function RequestForm() {
     const [loading, setLoading] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -100,11 +103,10 @@ export default function RequestForm() {
 
                 if (res.ok) {
                     const data = await res.json();
-                    alert('Yêu cầu đã được gửi thành công! Chuyển đến trang theo dõi...');
-                    // Reset form
-                    (e.target as HTMLFormElement).reset();
-                    setSelectedFiles([]);
-                    window.location.href = `/tracking/${data.id}`;
+                    setIsSubmitted(true);
+                    setTimeout(() => {
+                        window.location.href = `/tracking/${data.id}`;
+                    }, 1500);
                 } else {
                     const errorText = await res.text();
                     console.error('Error:', errorText);
@@ -123,52 +125,123 @@ export default function RequestForm() {
         }
     };
 
+    if (isSubmitted) {
+        return (
+            <Card className="w-full border-none shadow-xl bg-white/95 backdrop-blur-md p-8 text-center">
+                <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <Send className="w-8 h-8 text-green-600" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">Đã Gửi Yêu Cầu!</h2>
+                    <p className="text-gray-600">Đang chuyển hướng đến trang theo dõi...</p>
+                </motion.div>
+            </Card>
+        );
+    }
+
     return (
-        <Card className="w-full border-none shadow-none bg-transparent">
-            <CardHeader>
-                <CardTitle className="text-2xl font-bold text-center">Gửi Yêu Cầu Cứu Hộ</CardTitle>
+        <Card className="w-full border-none shadow-2xl bg-white/90 backdrop-blur-xl overflow-hidden">
+            <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white p-6">
+                <div className="flex items-center justify-center space-x-2">
+                    <AlertTriangle className="w-6 h-6 animate-pulse" />
+                    <CardTitle className="text-2xl font-bold text-center">Yêu Cầu Cứu Hộ</CardTitle>
+                </div>
+                <CardDescription className="text-red-100 text-center">
+                    Hệ thống sẽ tự động định vị GPS của bạn
+                </CardDescription>
             </CardHeader>
-            <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
+            <CardContent className="p-6">
+                <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="space-y-2">
-                        <Label htmlFor="name">Họ và tên</Label>
-                        <Input id="name" placeholder="Nguyễn Văn A" required />
+                        <Label htmlFor="name" className="flex items-center gap-2 text-gray-700">
+                            <User className="w-4 h-4" /> Họ và tên
+                        </Label>
+                        <Input
+                            id="name"
+                            placeholder="Nguyễn Văn A"
+                            required
+                            className="bg-white/50 border-gray-300 focus:ring-red-500 focus:border-red-500 transition-all"
+                        />
                     </div>
+
                     <div className="space-y-2">
-                        <Label htmlFor="phone">Số điện thoại</Label>
-                        <Input id="phone" placeholder="0912345678" required />
+                        <Label htmlFor="phone" className="flex items-center gap-2 text-gray-700">
+                            <Phone className="w-4 h-4" /> Số điện thoại
+                        </Label>
+                        <Input
+                            id="phone"
+                            placeholder="0912345678"
+                            required
+                            type="tel"
+                            className="bg-white/50 border-gray-300 focus:ring-red-500 focus:border-red-500 transition-all"
+                        />
                     </div>
+
                     <div className="space-y-2">
-                        <Label htmlFor="address">Địa chỉ cụ thể</Label>
+                        <Label htmlFor="address" className="flex items-center gap-2 text-gray-700">
+                            <MapPin className="w-4 h-4" /> Địa chỉ hiện tại
+                        </Label>
                         <Input
                             id="address"
-                            placeholder="123 Nguyễn Văn Linh, Quận 7, TP.HCM"
+                            placeholder="Nhập địa chỉ hoặc để trống (tự động GPS)"
                             required
+                            className="bg-white/50 border-gray-300 focus:ring-red-500 focus:border-red-500 transition-all"
                         />
-                        <p className="text-xs text-gray-500">GPS sẽ được tự động xác định</p>
                     </div>
+
                     <div className="space-y-2">
-                        <Label htmlFor="description">Mô tả sự cố</Label>
-                        <Textarea id="description" placeholder="Mô tả chi tiết..." required />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="images">Hình ảnh/Video (tùy chọn)</Label>
-                        <Input
-                            id="images"
-                            type="file"
-                            accept="image/*,video/*"
-                            multiple
-                            onChange={handleFileChange}
-                            className="cursor-pointer"
+                        <Label htmlFor="description" className="text-gray-700">Mô tả sự cố</Label>
+                        <Textarea
+                            id="description"
+                            placeholder="Mô tả chi tiết tình trạng, số người gặp nạn..."
+                            required
+                            className="bg-white/50 border-gray-300 focus:ring-red-500 focus:border-red-500 min-h-[100px] transition-all"
                         />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label className="flex items-center gap-2 text-gray-700">
+                            <FileVideo className="w-4 h-4" /> Hình ảnh/Video (Tùy chọn)
+                        </Label>
+                        <div className="flex items-center justify-center w-full">
+                            <label htmlFor="images" className="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Chạm để tải lên</span></p>
+                                    <p className="text-xs text-gray-500">IMG, VIDEO (Max 3 file)</p>
+                                </div>
+                                <Input
+                                    id="images"
+                                    type="file"
+                                    accept="image/*,video/*"
+                                    multiple
+                                    onChange={handleFileChange}
+                                    className="hidden"
+                                />
+                            </label>
+                        </div>
                         {selectedFiles.length > 0 && (
-                            <p className="text-sm text-gray-600">
-                                {selectedFiles.length} file đã chọn (sẽ được tự động nén)
+                            <p className="text-sm text-green-600 font-medium text-center">
+                                ✅ Đã chọn {selectedFiles.length} file
                             </p>
                         )}
                     </div>
-                    <Button type="submit" className="w-full bg-red-600 hover:bg-red-700" disabled={loading}>
-                        {loading ? "Đang gửi..." : "Gửi Yêu Cầu Khẩn Cấp"}
+
+                    <Button
+                        type="submit"
+                        className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-6 text-lg shadow-lg transform transition-all active:scale-95"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <>
+                                <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Đang Gửi...
+                            </>
+                        ) : (
+                            "GỬI YÊU CẦU KHẨN CẤP"
+                        )}
                     </Button>
                 </form>
             </CardContent>

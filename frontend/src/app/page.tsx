@@ -2,43 +2,56 @@ import MapComponent from '@/components/Map';
 import RequestForm from '@/components/RequestForm';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { ShieldAlert } from 'lucide-react';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col relative">
+    <main className="relative h-screen w-full overflow-hidden bg-gray-900">
+      {/* Map Layer - Full Screen */}
       <div className="absolute inset-0 z-0">
         <MapComponent />
+        {/* Gradient overlay for better text contrast on mobile top */}
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/70 to-transparent pointer-events-none" />
       </div>
 
-      {/* Dashboard Button - Top Right */}
-      <div className="absolute top-4 right-4 z-20">
-        <Link href="/dashboard">
-          <Button className="bg-yellow-500 hover:bg-yellow-600 shadow-lg">
-            📊 Dashboard
-          </Button>
-        </Link>
-      </div>
+      {/* Header Layer */}
+      <div className="absolute top-0 left-0 right-0 z-30 p-4 md:p-6 flex justify-between items-center pointer-events-none">
+        <div className="flex items-center gap-3 pointer-events-auto">
+          <div className="bg-red-600 text-white p-2.5 rounded-xl shadow-lg shadow-red-600/20 animate-pulse">
+            <ShieldAlert className="w-6 h-6" />
+          </div>
+          <div>
+            <h1 className="text-white font-bold text-xl md:text-2xl tracking-tight leading-none">
+              Cứu Hộ <span className="text-red-500">Khẩn Cấp</span>
+            </h1>
+            <p className="text-gray-300 text-xs font-medium">Hỗ trợ 24/7 trên toàn quốc</p>
+          </div>
+        </div>
 
-      <div className="z-10 w-full max-w-md m-4 md:m-8 bg-white/95 p-6 rounded-xl shadow-2xl backdrop-blur-md border border-gray-200">
-        <RequestForm />
-      </div>
-
-      {/* Footer */}
-      <div className="absolute bottom-4 left-0 right-0 z-20 flex justify-center">
-        <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md border border-gray-200">
-          <p className="text-sm text-gray-700 font-medium">
-            Powered by{' '}
-            <a
-              href="https://techdata.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 font-bold hover:text-blue-700 hover:underline transition-colors"
-            >
-              TechData.AI
-            </a>
-          </p>
+        <div className="pointer-events-auto">
+          <Link href="/dashboard">
+            <Button variant="secondary" className="shadow-xl bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all">
+              📊 Dashboard
+            </Button>
+          </Link>
         </div>
       </div>
+
+      {/* Form Layer - Responsive Layout */}
+      <div className="absolute z-20 
+          /* Mobile: Bottom Sheet style with scroll */
+          bottom-0 left-0 right-0 max-h-[80vh] overflow-y-auto scrollbar-hide
+          /* Desktop: Floating Card style */
+          md:top-28 md:left-8 md:bottom-auto md:w-[480px] md:max-h-[calc(100vh-8rem)] md:overflow-visible
+          px-4 pb-4 md:p-0
+      ">
+        <div className="pb-safe md:pb-0">
+          <RequestForm />
+        </div>
+      </div>
+
+      {/* Mobile Bottom Gradient for smooth fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/20 to-transparent pointer-events-none md:hidden z-10" />
     </main>
   );
 }
