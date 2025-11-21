@@ -247,6 +247,11 @@ export default function Dashboard() {
                         ))
                     )}
                 </div>
+
+                {/* Footer */}
+                <div className="p-3 text-center text-xs text-gray-500 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+                    Powered by <span className="font-bold text-gray-700">TechData.AI</span>
+                </div>
             </div>
 
             {/* RIGHT PANEL (Mobile: Bottom Fixed 40vh, Desktop: Right 2/3 Full Height) */}
